@@ -54,6 +54,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: GeometryCalculator-v${{ github.event.inputs.version }}-${{ runner.os }}
+          name: ${{ runner.os }} Build
           path: |
             build/main.dist/*
