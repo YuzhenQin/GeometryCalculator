@@ -95,6 +95,12 @@ class Question:
             del self.conditions[to_del]
         self.update_tableview()
 
+    def __getstate__(self):
+        return self.points, self.conditions
+
+    def __setstate__(self, state):
+        self.points, self.conditions = state
+
 
 class Window(FluentWindow):
     def __init__(self):
