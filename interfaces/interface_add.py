@@ -1,4 +1,6 @@
-from PyQt6.QtWidgets import QWidget, QAbstractItemView, QHeaderView, QMainWindow
+import pickle
+
+from PyQt6.QtWidgets import QWidget, QAbstractItemView, QHeaderView, QMainWindow, QFileDialog
 from qfluentwidgets import MessageBoxBase
 from sympy import sqrt, Eq
 
@@ -56,6 +58,9 @@ class InterfaceAdd(QMainWindow, Ui_Add):
         self.init_tableview(self.ListWidget_conditions)
         # 删除点/条件
         self.PushButton_delete.clicked.connect(self.delete)
+        # 文件操作
+        self.action_save.triggered.connect(self.save)
+        self.action_open.triggered.connect(self.open_file)
 
     def add_point_and_show(self, point: Point):
         """
@@ -156,6 +161,24 @@ class InterfaceAdd(QMainWindow, Ui_Add):
     def delete(self):
         """删除点/条件的槽函数"""
         self.w.question.delete()
+
+    def save(self):
+        """保存题目至本地"""
+        path = QFileDialog.getSaveFileName(self.w, '保存题目', None, 'Python序列化文件(*.pickle)')[0]
+        if len(path) == 0:
+            return
+        with open(path, mode='wb') as f:
+            pickle.dump(self.w.question, f)
+
+    def open_file(self):
+        """打开题目"""
+        path = QFileDialog.getOpenFileName(self.w, '保存题目', None, 'Python序列化文件(*.pickle)')[0]
+        if len(path) == 0:
+            return
+        with open(path, mode='rb') as f:
+            self.w.question = pickle.load(f)
+            self.w.question.w = self.w
+            self.w.question.update_tableview()
 
 
 def get_widget(Ui):

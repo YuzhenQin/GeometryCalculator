@@ -472,17 +472,17 @@ PillToolButton:disabled:checked {
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
+    <addaction name="action_save"/>
+    <addaction name="action_open"/>
    </widget>
    <addaction name="menu"/>
   </widget>
-  <action name="action">
+  <action name="action_save">
    <property name="text">
     <string>保存</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="action_open">
    <property name="text">
     <string>打开</string>
    </property>
