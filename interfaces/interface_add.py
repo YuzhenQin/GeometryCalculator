@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QWidget, QTableWidgetItem, QAbstractItemView, QHeaderView
+from PyQt6.QtWidgets import QWidget, QAbstractItemView, QHeaderView, QMainWindow
 from qfluentwidgets import MessageBoxBase
 from sympy import sqrt, Eq
 
@@ -15,7 +15,7 @@ if __name__ == '__main__':
     import main
 
 
-class InterfaceAdd(QWidget, Ui_Add):
+class InterfaceAdd(QMainWindow, Ui_Add):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         self.setupUi(self)
@@ -30,7 +30,8 @@ class InterfaceAdd(QWidget, Ui_Add):
         self.point_cnt = 0
         self.condition_cnt = 0
 
-    def init_tableview(self, tableview):
+    @staticmethod
+    def init_tableview(tableview):
         tableview.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         tableview.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         tableview.setBorderVisible(True)
@@ -58,27 +59,11 @@ class InterfaceAdd(QWidget, Ui_Add):
 
     def add_point_and_show(self, point: Point):
         """
-        执行预化简（如果开了的话），添加点并显示，添加符号
+        执行预化简（如果开了的话），添加点并显示
         :param point: 点的对象
         :return:
         """
-        # 预化简
-        if self.CheckBox_pre_simplify.isChecked():
-            point.x = sympy.simplify(point.x)
-            point.y = sympy.simplify(point.y)
-        # 添加点
-        self.w.points[point.name] = point
-        self.point_cnt += 1
-        self.ListWidget_points.setRowCount(self.point_cnt)
-        self.ListWidget_points.setItem(self.point_cnt - 1, 0, QTableWidgetItem(point.name))
-        self.ListWidget_points.setItem(self.point_cnt - 1, 1, QTableWidgetItem(str(point.x)))
-        self.ListWidget_points.setItem(self.point_cnt - 1, 2, QTableWidgetItem(str(point.y)))
-        self.ListWidget_points.resizeColumnsToContents()
-        # 添加符号
-        if isinstance(point.x, sympy.Symbol):
-            self.w.symbols.add(point.x)
-        if isinstance(point.y, sympy.Symbol):
-            self.w.symbols.add(point.y)
+        self.w.question.add_point(point)
 
     def add_condition_and_show(self, eq: Eq, text: str):
         """
@@ -88,14 +73,7 @@ class InterfaceAdd(QWidget, Ui_Add):
         :return:
         """
         # 预化简
-        if self.CheckBox_pre_simplify.isChecked():
-            eq = sympy.simplify(eq)
-        self.w.conditions.append(eq)
-        self.condition_cnt += 1
-        self.ListWidget_conditions.setRowCount(self.condition_cnt)
-        self.ListWidget_conditions.setItem(self.condition_cnt - 1, 0, QTableWidgetItem(text))
-        self.ListWidget_conditions.setItem(self.condition_cnt - 1, 1, QTableWidgetItem(f'{eq.lhs} = {eq.rhs}'))
-        self.ListWidget_conditions.resizeColumnsToContents()
+        self.w.question.add_condition(eq, text)
 
     def add_point(self):
         """添加点"""
@@ -104,11 +82,11 @@ class InterfaceAdd(QWidget, Ui_Add):
             # 读取输入的内容
             name = w.wid.LineEdit_name.text()
             try:
-                x = read.to_expr(w.wid.LineEdit_x.text(), self.w.points)
+                x = read.to_expr(w.wid.LineEdit_x.text(), self.w.question.points)
             except:
                 x = None
             try:
-                y = read.to_expr(w.wid.LineEdit_y.text(), self.w.points)
+                y = read.to_expr(w.wid.LineEdit_y.text(), self.w.question.points)
             except:
                 y = None
             # 创建点并添加
@@ -121,8 +99,8 @@ class InterfaceAdd(QWidget, Ui_Add):
         if w.exec():
             # 读取输入的内容
             name = w.wid.LineEdit_name.text()
-            l1 = read.to_line_object(w.wid.LineEdit_l1.text(), self.w.points)
-            l2 = read.to_line_object(w.wid.LineEdit_l2.text(), self.w.points)
+            l1 = read.to_line_object(w.wid.LineEdit_l1.text(), self.w.question.points)
+            l2 = read.to_line_object(w.wid.LineEdit_l2.text(), self.w.question.points)
             # 创建点并添加
             point = Intersection(name, l1, l2)
             self.add_point_and_show(point)
@@ -133,9 +111,9 @@ class InterfaceAdd(QWidget, Ui_Add):
         if w.exec():
             # 读取输入的内容
             name = w.wid.LineEdit_name.text()
-            l = read.to_line_object(w.wid.LineEdit_l.text(), self.w.points)
+            l = read.to_line_object(w.wid.LineEdit_l.text(), self.w.question.points)
             try:
-                x = read.to_expr(w.wid.LineEdit_x.text(), self.w.points)
+                x = read.to_expr(w.wid.LineEdit_x.text(), self.w.question.points)
             except:
                 x = None
             # 创建点并添加
@@ -147,8 +125,8 @@ class InterfaceAdd(QWidget, Ui_Add):
         w = MsgBoxLinePositionRelationship(self.w, '//')
         if w.exec():
             # 读取输入的内容
-            l1 = read.to_line_object(w.wid.LineEdit_1.text(), self.w.points)
-            l2 = read.to_line_object(w.wid.LineEdit_2.text(), self.w.points)
+            l1 = read.to_line_object(w.wid.LineEdit_1.text(), self.w.question.points)
+            l2 = read.to_line_object(w.wid.LineEdit_2.text(), self.w.question.points)
             # 平行斜率相等
             eq = Eq(l1.k, l2.k)
             self.add_condition_and_show(eq, f'{w.wid.LineEdit_1.text()}//{w.wid.LineEdit_2.text()}')
@@ -158,8 +136,8 @@ class InterfaceAdd(QWidget, Ui_Add):
         w = MsgBoxLinePositionRelationship(self.w, '⊥')
         if w.exec():
             # 读取输入的内容
-            l1 = read.to_line_object(w.wid.LineEdit_1.text(), self.w.points)
-            l2 = read.to_line_object(w.wid.LineEdit_2.text(), self.w.points)
+            l1 = read.to_line_object(w.wid.LineEdit_1.text(), self.w.question.points)
+            l2 = read.to_line_object(w.wid.LineEdit_2.text(), self.w.question.points)
             # 垂直则斜率积为-1
             eq = Eq(l1.k * l2.k, -1)
             self.add_condition_and_show(eq, f'{w.wid.LineEdit_1.text()}⊥{w.wid.LineEdit_2.text()}')
@@ -169,39 +147,15 @@ class InterfaceAdd(QWidget, Ui_Add):
         w = MsgBoxEq(self.w)
         if w.exec():
             # 读取输入的内容
-            left = read.to_expr(w.wid.LineEdit_1.text(), self.w.points)
-            right = read.to_expr(w.wid.LineEdit_2.text(), self.w.points)
+            left = read.to_expr(w.wid.LineEdit_1.text(), self.w.question.points)
+            right = read.to_expr(w.wid.LineEdit_2.text(), self.w.question.points)
             # 两边相等
             eq = Eq(left, right)
             self.add_condition_and_show(eq, f'{w.wid.LineEdit_1.text()}={w.wid.LineEdit_2.text()}')
 
     def delete(self):
         """删除点/条件的槽函数"""
-        to_del = self.LineEdit_delete.text()
-        # 删除点
-        if to_del in self.w.points.keys():
-            del self.w.points[to_del]
-            # 删除显示
-            for i in range(self.point_cnt):
-                now = self.ListWidget_points.item(i, 0).text()
-                if to_del == now:
-                    self.ListWidget_points.removeRow(i)
-                    break
-            # 删除最后一行
-            self.point_cnt -= 1
-            self.ListWidget_points.setRowCount(self.point_cnt)
-        else:
-            # 删除条件
-            for i in range(self.condition_cnt):
-                now = self.ListWidget_conditions.item(i, 0).text()
-                if to_del == now:
-                    self.w.conditions.pop(i)
-                    # 删除显示
-                    self.ListWidget_conditions.removeRow(i)
-                    # 删除最后一行
-                    self.condition_cnt -= 1
-                    self.ListWidget_conditions.setRowCount(self.condition_cnt)
-                    break
+        self.w.question.delete()
 
 
 def get_widget(Ui):

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Add</class>
- <widget class="QWidget" name="Add">
+ <widget class="QMainWindow" name="Add">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,144 +11,145 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>MainWindow</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_6">
-   <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="2" column="0">
-      <widget class="PushButton" name="PushButton_intersection">
-       <property name="text">
-        <string>添加交点</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="PushButton" name="PushButton_point_on_line">
-       <property name="text">
-        <string>添加线上的点</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="PushButton" name="PushButton_point">
-       <property name="text">
-        <string>添加点</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="CardWidget" name="CardWidget">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="TableWidget" name="ListWidget_points"/>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="TitleLabel" name="TitleLabel">
-       <property name="text">
-        <string>创建点</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="SubtitleLabel" name="SubtitleLabel">
-       <property name="text">
-        <string>已有的点：</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="1">
-    <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0">
-      <widget class="TitleLabel" name="TitleLabel_2">
-       <property name="text">
-        <string>条件</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="1" column="0" colspan="3">
-      <widget class="PushButton" name="PushButton_parallel">
-       <property name="text">
-        <string>平行</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0" colspan="3">
-      <widget class="PushButton" name="PushButton_vertical">
-       <property name="text">
-        <string>垂直</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0" colspan="3">
-      <widget class="PushButton" name="PushButton_eq">
-       <property name="text">
-        <string>等式</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="3">
-      <widget class="SubtitleLabel" name="SubtitleLabel_2">
-       <property name="text">
-        <string>已有的条件（方程）：</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0" colspan="3">
-      <widget class="CardWidget" name="CardWidget_2">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="TableWidget" name="ListWidget_conditions"/>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="CheckBox" name="CheckBox_pre_simplify">
-       <property name="text">
-        <string>预化简</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <layout class="QGridLayout" name="gridLayout_5">
-     <item row="0" column="0">
-      <widget class="BodyLabel" name="BodyLabel">
-       <property name="text">
-        <string>删除点/条件</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="LineEdit" name="LineEdit_delete"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="PushButton" name="PushButton_delete">
-       <property name="styleSheet">
-        <string notr="true">PushButton, ToolButton, ToggleButton, ToggleToolButton {
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_6">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="0">
+       <widget class="PushButton" name="PushButton_intersection">
+        <property name="text">
+         <string>添加交点</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="PushButton" name="PushButton_point_on_line">
+        <property name="text">
+         <string>添加线上的点</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="PushButton" name="PushButton_point">
+        <property name="text">
+         <string>添加点</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="CardWidget" name="CardWidget">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="TableWidget" name="ListWidget_points"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="TitleLabel" name="TitleLabel">
+        <property name="text">
+         <string>创建点</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="SubtitleLabel" name="SubtitleLabel">
+        <property name="text">
+         <string>已有的点：</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1">
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="TitleLabel" name="TitleLabel_2">
+        <property name="text">
+         <string>条件</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="PushButton" name="PushButton_parallel">
+        <property name="text">
+         <string>平行</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="PushButton" name="PushButton_vertical">
+        <property name="text">
+         <string>垂直</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="PushButton" name="PushButton_eq">
+        <property name="text">
+         <string>等式</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="3">
+       <widget class="SubtitleLabel" name="SubtitleLabel_2">
+        <property name="text">
+         <string>已有的条件（方程）：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" colspan="3">
+       <widget class="CardWidget" name="CardWidget_2">
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="TableWidget" name="ListWidget_conditions"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="CheckBox" name="CheckBox_pre_simplify">
+        <property name="text">
+         <string>预化简</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="BodyLabel" name="BodyLabel">
+        <property name="text">
+         <string>删除点/条件</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="LineEdit" name="LineEdit_delete"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="PushButton" name="PushButton_delete">
+        <property name="styleSheet">
+         <string notr="true">PushButton, ToolButton, ToggleButton, ToggleToolButton {
     color: red;
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid rgba(0, 0, 0, 0.073);
@@ -448,15 +449,44 @@ PillToolButton:disabled:checked {
     border: none;
 }
 </string>
-       </property>
-       <property name="text">
-        <string>确认</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-  </layout>
+        </property>
+        <property name="text">
+         <string>确认</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <action name="action">
+   <property name="text">
+    <string>保存</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>打开</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

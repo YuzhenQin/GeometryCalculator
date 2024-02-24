@@ -64,14 +64,13 @@ class InterfaceSolve(QWidget, Ui_Solve):
     def solve(self):
         """开始计算"""
         # 读取要求的值
-        expr = read.to_expr(self.LineEdit_want.text(), self.w.points)
+        expr = read.to_expr(self.LineEdit_want.text(), self.w.question.points)
         a = sympy.Symbol('a')  # 要求的符号
-        self.w.symbols.add(a)
-        self.w.conditions.append(a - expr)
+        self.w.question.conditions['tmp'] = a - expr
         # 开子线程求解
         self.thread_solve.a = a
         self.thread_solve.start()
-        
+
     def show_result(self):
         formula = ''
         for i in self.thread_solve.result:
@@ -90,15 +89,16 @@ class ThreadSolve(QThread):
         """在多线程中解方程，不让主线程卡死"""
         super().__init__()
         self.result = None
-        self.w = w
+        self.w: "main.Window" = w
         self.a = None
 
     def run(self):
-        self.result = sympy.solve(self.w.conditions, self.w.symbols, dict=True)
+        symbols = self.w.question.symbols()
+        symbols.add(self.a)
+        self.result = sympy.solve(self.w.question.conditions.values(), symbols, dict=True)
         self.result = set([i[self.a] for i in self.result])
         # 清理临时变量
-        self.w.conditions.pop(-1)
-        self.w.symbols.remove(self.a)
+        del self.w.question.conditions['tmp']
 
 
 class ThreadTimer(QThread):
