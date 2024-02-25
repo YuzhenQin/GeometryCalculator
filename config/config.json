@@ -1,0 +1,33 @@
+{
+    "Update": {
+        "CheckUpdateAtStartUp": true
+    },
+    "DesktopLyric": {
+        "Alignment": "Center",
+        "FontFamily": "Microsoft YaHei",
+        "FontSize": 50,
+        "HighlightColor": "#ff0099bc",
+        "StrokeSize": 5
+    },
+    "Folders": {
+        "Download": "D:/Elect/Documents/PyQt/Git/GeometryCalculator/download",
+        "LocalMusic": []
+    },
+    "MainWindow": {
+        "DpiScale": "Auto",
+        "EnableAcrylicBackground": true,
+        "Language": "Auto",
+        "MinimizeToTray": true,
+        "PlayBarColor": "#ff225c7f",
+        "RecentPlayNumbers": 300
+    },
+    "Online": {
+        "MvQuality": "Full HD",
+        "PageSize": 33,
+        "SongQuality": "Standard quality"
+    },
+    "QFluentWidgets": {
+        "ThemeColor": "#fffec0ee",
+        "ThemeMode": "Auto"
+    }
+}
