@@ -37,18 +37,24 @@ class Line:
         """
         self.p1 = p1
         self.p2 = p2
-        self.k = self._k()
-        self.b = self._b()
 
-    def _k(self):
-        """斜率"""
-        return (self.p1.y - self.p2.y) / (self.p1.x - self.p2.x)
-
-    def _b(self):
-        """截距"""
-        # y = kx + b
-        # b = y - kx
-        return self.p1.y - self.k * self.p1.x
+    @property
+    def abc(self) -> tuple:
+        """
+        直线的一般式(ax + by + c = 0)方程的a,b,c
+        :return: 元组(a, b, c)
+        """
+        # 已知直线上两点求直线的一般式方程
+        # 已知直线上的两点P1(X1,Y1) P2(X2,Y2)， P1 P2两点不重合。则直线的一般式方程AX+BY+C=0中，A B C分别等于：
+        # A = Y2 - Y1
+        # B = X1 - X2
+        # C = X2*Y1 - X1*Y2
+        x1, y1 = self.p1.coordinate()
+        x2, y2 = self.p2.coordinate()
+        a = y2 - y1
+        b = x1 - x2
+        c = x2 * y1 - x1 * y2
+        return a, b, c
 
 
 class Intersection(Point):
@@ -59,13 +65,16 @@ class Intersection(Point):
         :param l1: 一条线
         :param l2: 另一条线
         """
-        # { y = k1x + b1
-        # { y = k2x + b2
-        # k1x + b1 = k2x + b2
-        # (k1 - k2)x = b2 - b1
-        # x = (b2 - b1)/(k1 - k2)
-        x = (l2.b - l1.b) / (l1.k - l2.k)
-        y = l1.k * x + l1.b
+        # 两直线交点的计算公式：
+        # 直线一：A1x+B1y+C1=0，
+        # 直线二：A2x+B2y+C2=0，
+        # 则两直线交点计算方法为：
+        # x=(B1C2-B2C1)/(B2A1-B1A2) 。
+        # y=(A1C2-C1A2)/(B1A2-A1B2)。
+        a1, b1, c1 = l1.abc
+        a2, b2, c2 = l2.abc
+        x = (b1 * c2 - b2 * c1) / (b2 * a1 - b1 * a2)
+        y = (a1 * c2 - c1 * a2) / (b1 * a2 - a1 * b2)
         super().__init__(name, x, y)
 
 
@@ -77,9 +86,20 @@ class PointOnLine(Point):
         :param x: 横坐标，None代表未知数
         :param l: 点所在的线
         """
+        a, b, c = l.abc
+        # 特殊情况：竖线
+        if b == 0:
+            # ax + c = 0
+            # x = -c / a
+            x = -c / a
+            super().__init__(name, x, None)
+            return
+        # ax + by + c = 0
+        # by = -ax - c
+        # y = (-ax - c) / b
         if x is None:
-            x = sympy.Symbol(f'x{name}')
-        y = l.k * x + l.b
+            x = sympy.Symbol(f'x_{name}')
+        y = (-a * x - c) / b
         super().__init__(name, x, y)
 
 
@@ -124,7 +144,11 @@ class Angle:
 
 
 if __name__ == '__main__':
-    a = Point('A', 4, 0)
-    b = Point('B', 0, 3)
-    o = Point('O', 0, 0)
-    print(Angle(a, o, b).val)
+    from sympy import Integer
+
+    p1 = Point('A', Integer(1), Integer(0))
+    p2 = Point('B', Integer(1), Integer(1))
+    l = Line(p1, p2)
+    print(l.abc)
+    p3 = PointOnLine('C', None, l)
+    print(p3)
