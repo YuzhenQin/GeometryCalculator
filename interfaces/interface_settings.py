@@ -84,7 +84,7 @@ class SettingInterface(ScrollArea):
 
         theme = 'dark' if isDarkTheme() else 'light'
         here = os.path.dirname(__file__)
-        with open(here + f"\\setting_interface_{theme}.qss",
+        with open(here + f"\\interface_settings_{theme}.qss",
                   encoding='utf-8') as f:
             self.setStyleSheet(f.read())
 
