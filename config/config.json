@@ -1,10 +1,4 @@
 {
-    "MainWindow": {
-        "DpiScale": "Auto",
-        "MinimizeToTray": true,
-        "PlayBarColor": "#ff225c7f",
-        "RecentPlayNumbers": 300
-    },
     "QFluentWidgets": {
         "ThemeColor": "#ff009faa",
         "ThemeMode": "Auto"
