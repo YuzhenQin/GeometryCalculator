@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>几何计算器 2.0</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.10.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.10.1/core.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+<div>
+    <h1>输入数据</h1>
+    <div class="inline-block-div">
+        <h2>设未知数</h2>
+        <label for="symbol-name">名字</label>
+        <input id="symbol-name" placeholder="小写英文字母或希腊字母的英文拼写_下标" style="width: 250px;">
+        <br>
+        <input type="radio" name="symbol-sign" checked="checked">任意实数
+        <input type="radio" name="symbol-sign">正数
+        <input type="radio" name="symbol-sign">负数
+        <br>
+        <button id="create-symbol">创建</button>
+    </div>
+    <div class="inline-block-div">
+        <h2>已有的未知数</h2>
+        <div id="symbols"></div>
+    </div>
+</div>
+<div>
+    <div class="inline-block-div">
+        <h2>设点坐标</h2>
+        <label for="point-name">名字</label>
+        <input id="point-name" placeholder="大写英文字母_下标" oninput="onPointNameInput()">
+        <br>
+        坐标 (<input id="point-x" placeholder="x 表达式">, <input id="point-y" placeholder="y 表达式">)
+        <br>
+        <button id="create-point">创建</button>
+    </div>
+    <div class="inline-block-div">
+        <h2>已有的点</h2>
+        <ul id="points"></ul>
+    </div>
+</div>
+<script src="./src/ui.js"></script>
+</body>
+
+</html>
