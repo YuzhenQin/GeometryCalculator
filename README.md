@@ -1,3 +1,7 @@
+# 该仓库已废弃
+
+新仓库：[几何计算器 2](https://github.com/zhdbk3/GeometryCalculator)
+
 # 几何计算器
 用解析几何的思想，求解几何计算题
 > 万物皆数。 ——毕达哥拉斯
