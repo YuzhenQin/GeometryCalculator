@@ -1,3 +1,3 @@
 import pyodide
 
-document: pyodide.ffi.JsProxy = ...
+document: pyodide.ffi.JsProxy

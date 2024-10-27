@@ -1,5 +1,13 @@
-.inline-block-div {
+.left-div {
+    display: inline-block;
+    width: 450px;
+}
+
+.right-div {
     display: inline-block;
     vertical-align: top;
-    width: 450px;
+}
+
+#output {
+    border: 1px solid pink;
 }
