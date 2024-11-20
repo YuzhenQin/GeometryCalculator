@@ -3,7 +3,8 @@ from typing import Dict, Set
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QTableWidgetItem
-from qfluentwidgets import FluentWindow, FluentTranslator, FluentIcon, NavigationItemPosition, MessageBox
+from qfluentwidgets import (FluentWindow, FluentTranslator, FluentIcon, NavigationItemPosition,
+                            MessageBox, Theme, setTheme)
 import sympy
 from sympy import Eq, Symbol
 
@@ -111,6 +112,9 @@ class Window(FluentWindow):
         # 目前的题目
         self.question = Question(self)
 
+        # enable acrylic effect
+        self.navigationInterface.setAcrylicEnabled(True)
+
         # 添加子界面
         self.ui_add = interfaces.InterfaceAdd(self)
         self.addSubInterface(self.ui_add, FluentIcon.ADD, '添加点和条件')
@@ -118,6 +122,8 @@ class Window(FluentWindow):
         self.addSubInterface(self.ui_solve, FluentIcon.EDIT, '求解')
         self.ui_help = interfaces.InterfaceHelp(self)
         self.addSubInterface(self.ui_help, FluentIcon.HELP, '帮助与关于', NavigationItemPosition.BOTTOM)
+        self.settingInterface = interfaces.SettingInterface(self)
+        self.addSubInterface(self.settingInterface, FluentIcon.SETTING, self.tr('设置'), NavigationItemPosition.BOTTOM)
 
         # 报错不崩溃
         # sys.excepthook = self.error
